@@ -1,1 +1,24 @@
+import socket
+
+tcpSocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+tcpSocket.bind(("0.0.0.0",8000))
+tcpSocket.listen(2)
+
+print "Waiting for a Client"
+(client,(ip,port))=tcpSocket.accept()
+
+print "Received connection from ",ip
+print"Starting ECHO Output..."
+
+data="TEST-DATA"
+while len(data):
+	data = client.recv(2048)
+	print "Client Sent: ",data
+	client.send(data)
+
+print "Closing connection"
+client.close()
+
+print "Shutting Down Server"
+tcpSocket.close()
 
